@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Timecop.js - Jasmine Specs</title>
+  <link rel="stylesheet" type="text/css" href="spec/support/jasmine.css">
+  <script type="text/javascript" src="spec/support/json2.js"></script>
+  <script type="text/javascript" src="spec/support/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="spec/support/jasmine.js"></script>
+  <script type="text/javascript" src="spec/support/jasmine-html.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="lib/Timecop.js"></script>
+
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="spec/TimecopSpec.js"></script>
+
+</head>
+<body>
+<script type="text/javascript">
+  jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+  jasmine.getEnv().execute();
+</script>
+
+</body>
+</html>
