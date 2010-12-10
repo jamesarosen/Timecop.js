@@ -14,11 +14,13 @@ describe('Timecop', function() {
 
   it('should have a public API', function() {
     expect(Timecop).toHaveFunction('travel');
+    expect(Timecop).toHaveFunction('freeze');
     expect(Timecop).toHaveFunction('return');
     expect(Timecop).toHaveFunction('topOfStack');
+    expect(Timecop).toHaveFunction('buildNativeDate');
   });
 
-  describe('#travel', function() {
+  describe('.travel', function() {
 
     beforeEach(function() {
       Timecop.travel(2008, 6, 5, 14, 30, 15, 450);
@@ -60,7 +62,7 @@ describe('Timecop', function() {
 
   });
 
-  describe('#freeze', function() {
+  describe('.freeze', function() {
 
     beforeEach(function() {
       Timecop.freeze(2008, 6, 5, 14, 30, 15, 450);
