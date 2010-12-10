@@ -1,4 +1,4 @@
-//  Timecop.js version 0.0.1
+//  Timecop.js version 0.0.2
 //  (c) 2010 James A. Rosen, Zendesk Inc.
 //  Timecop.js is freely distributable under the MIT license.
 //  The concept and some of the structure is borrowed from Timecop,
@@ -136,7 +136,7 @@ var Timecop = {
 root.Timecop = Timecop;
 
 // Export it as a V8 module, if applicable:
-if (typeof exports !== 'undefined') exports._ = _;
+if (typeof(exports) !== 'undefined') { exports._ = _; }
 
 
 // A mock Date implementation.
@@ -206,4 +206,4 @@ Timecop.TimeStackItem.prototype = {
   }
 };
 
-)();
+})();
