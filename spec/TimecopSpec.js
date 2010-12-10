@@ -85,4 +85,16 @@ describe('Timecop', function() {
 
   });
 
+  describe('.return', function() {
+    it('should return to the present regardless of the size of the Timecop stack', function() {
+      var beforeLeave = new Date();
+      Timecop.travel(1982, 7,  8);
+      Timecop.freeze(1969, 9,  10);
+      Timecop.travel(2004, 11, 12);
+      Timecop.return();
+      var afterReturn = new Date();
+      expect(afterReturn).toBeCloseInTimeTo(beforeLeave);
+    });
+  });
+
 });
