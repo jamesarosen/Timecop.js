@@ -39,7 +39,7 @@ describe('Timecop', function() {
       expect(date.getMilliseconds()).toEqual(450);
     });
 
-    it('should not change the time dates created with arguments', function() {
+    it('should not change the dates created with arguments', function() {
       var date = new Date(1999, 8, 24);
       expect(date.getFullYear()).toEqual(1999);
       expect(date.getMonth()   ).toEqual(8);
