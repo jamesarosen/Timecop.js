@@ -4,6 +4,12 @@ describe('Timecop', function() {
     expect(typeof(Timecop)).not.toEqual('undefined');
   });
 
+  it('should have a public API', function() {
+    expect(Timecop).toHaveFunction('travel');
+    expect(Timecop).toHaveFunction('return');
+    expect(Timecop).toHaveFunction('topOfStack');
+  });
+
   describe('#travel', function() {
 
     beforeEach(function() {
