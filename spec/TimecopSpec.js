@@ -59,14 +59,28 @@ describe('Timecop', function() {
 
   });
 
+  describe('.travel with a function as the last argument', function() {
+    var duringTrip;
+
+    beforeEach(function() {
+      Timecop.travel(1901, 1, 2, function() {
+        duringTrip = new Date();
+      });
+    });
+
+    it('should evaluate the function in the given time', function() {
+      expect(duringTrip).toBeCloseInTimeTo(new Date(1901, 1, 2));
+    });
+
+    it('should automatically return to the present', function() {
+      expect(Timecop.topOfStack()).toBeNull();
+    });
+  });
+
   describe('.freeze', function() {
 
     beforeEach(function() {
       Timecop.freeze(2008, 6, 5, 14, 30, 15, 450);
-    });
-
-    afterEach(function() {
-      Timecop.return();
     });
 
     it('should stop time', function() {
@@ -80,6 +94,24 @@ describe('Timecop', function() {
       waitsFor(function() { return self.timePassed; }, 'some time to have passed', 500);
     });
 
+  });
+
+  describe('.freeze with a function as the last argument', function() {
+    var duringTrip;
+
+    beforeEach(function() {
+      Timecop.freeze(1864, 4, 22, function() {
+        duringTrip = new Date();
+      });
+    });
+
+    it('should evaluate the function in the given time', function() {
+      expect(duringTrip).toBeCloseInTimeTo(new Date(1864, 4, 22));
+    });
+
+    it('should automatically return to the present', function() {
+      expect(Timecop.topOfStack()).toBeNull();
+    });
   });
 
   describe('.return', function() {
