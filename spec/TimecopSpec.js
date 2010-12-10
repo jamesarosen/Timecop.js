@@ -24,8 +24,9 @@ describe('Timecop', function() {
   describe('.travel', function() {
 
     describe('with a date spelled out in numbers as arguments', function() {
+      var someTimeIn2008 = new Timecop.NativeDate(2008, 6, 5, 14, 30, 15, 450);
       beforeEach(function() {
-        Timecop.travel(2008, 6, 5, 14, 30, 15, 450);
+        Timecop.travel(someTimeIn2008);
       });
 
       it('should leave time running', function() {
@@ -41,14 +42,7 @@ describe('Timecop', function() {
       });
 
       it('should change the time of dates created without any arguments', function() {
-        var date = new Date();
-        expect(date.getFullYear()    ).toEqual(2008);
-        expect(date.getMonth()       ).toEqual(6);
-        expect(date.getDate()        ).toEqual(5);
-        expect(date.getHours()       ).toEqual(14);
-        expect(date.getMinutes()     ).toEqual(30);
-        expect(date.getSeconds()     ).toEqual(15);
-        expect(date.getMilliseconds()).toEqual(450);
+        expect(new Date()).toBeCloseInTimeTo(someTimeIn2008);
       });
 
       it('should not change the dates created with arguments', function() {
