@@ -59,6 +59,16 @@ describe('Timecop', function() {
       });
     });
 
+    describe('when given a Date as an argument', function() {
+      var independenceDay = new Timecop.NativeDate(1776, 6, 4);
+      beforeEach(function() {
+        Timecop.travel(independenceDay);
+      });
+      it('should travel to that Date', function() {
+        expect(new Date()).toBeCloseInTimeTo(independenceDay);
+      });
+    });
+
     describe('with a function as the last argument', function() {
       var duringTrip;
 
