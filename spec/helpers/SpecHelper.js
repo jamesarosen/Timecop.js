@@ -4,12 +4,10 @@ beforeEach(function() {
       return jQuery.isFunction(this.actual[methodName]);
     },
 
-    toHaveClass: function(expected) {
-      return jQuery(this.actual).hasClass(expected);
-    },
-
-    toBeVisible: function() {
-      return jQuery(this.actual).is(':visible');
+    toBeCloseInTimeTo: function(otherDate, delta) {
+      delta = delta || 500;
+      return otherDate.getTime() - delta <= this.getTime() &&
+             otherDate.getTime + delta >= this.getTime();
     }
   });
 });
