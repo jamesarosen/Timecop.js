@@ -28,6 +28,18 @@ describe('Timecop', function() {
       Timecop.return();
     });
 
+    it('should leave time running', function() {
+      var self = this;
+      var date1 = new Date();
+      setTimeout(function() {
+        var date2 = new Date();
+        expect(date2.getTime() - date1.getTime()).toBeGreaterThan(200);
+        expect(date2.getTime() - date1.getTime()).toBeLessThan(400);
+        self.timePassed = true;
+      }, 300);
+      waitsFor(function() { return self.timePassed; }, 'some time to have passed', 500);
+    });
+
     it('should change the time of dates created without any arguments', function() {
       var date = new Date();
       expect(date.getFullYear()    ).toEqual(2008);
