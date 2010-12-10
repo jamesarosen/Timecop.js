@@ -6,8 +6,8 @@ beforeEach(function() {
 
     toBeCloseInTimeTo: function(otherDate, delta) {
       delta = delta || 500;
-      return otherDate.getTime() - delta <= this.getTime() &&
-             otherDate.getTime + delta >= this.getTime();
+      return otherDate.getTime() - delta <= this.actual.getTime() &&
+             otherDate.getTime() + delta >= this.actual.getTime();
     }
   });
 });
