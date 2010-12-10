@@ -8,6 +8,10 @@ beforeEach(function() {
       delta = delta || 500;
       return otherDate.getTime() - delta <= this.actual.getTime() &&
              otherDate.getTime() + delta >= this.actual.getTime();
+    },
+
+    toBeTheSameTimeAs: function(otherDate) {
+      return otherDate.getTime() === this.actual.getTime();
     }
   });
 });
