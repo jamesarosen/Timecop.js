@@ -1,6 +1,6 @@
 describe('Timecop', function() {
 
-  it( 'should exist', function() {
+  it('should exist', function() {
     expect(typeof(Timecop)).not.toEqual('undefined');
   });
 
@@ -33,5 +33,19 @@ describe('Timecop', function() {
     });
 
   });
+
+  describe('a date created without arguments while time-travelling', function() {
+    var date;
+
+    beforeEach(function() {
+      Timecop.travel(2008, 6, 5, 14, 30, 15, 450);
+      date = new Date();
+    });
+
+    it('should remember its "now" after we return to the present', function() {
+      Timecop.return();
+      expect(date.getFullYear()).toEqual(2008);
+    });
+  })
 
 });
