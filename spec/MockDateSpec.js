@@ -8,6 +8,7 @@ describe('Timecop.MockDate', function() {
   });
 
   afterEach(function() {
+    Timecop.return();
     Timecop.uninstall();
   });
 
@@ -25,10 +26,6 @@ describe('Timecop.MockDate', function() {
     beforeEach(function() {
       Timecop.travel(1980, 4, 29);
       date = new Timecop.MockDate();
-    });
-
-    afterEach(function() {
-      Timecop.return();
     });
 
     it('should be in the past', function() {

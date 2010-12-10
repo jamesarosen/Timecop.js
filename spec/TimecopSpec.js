@@ -5,6 +5,7 @@ describe('Timecop', function() {
   });
 
   afterEach(function() {
+    Timecop.return();
     Timecop.uninstall();
   });
 
@@ -24,10 +25,6 @@ describe('Timecop', function() {
 
     beforeEach(function() {
       Timecop.travel(2008, 6, 5, 14, 30, 15, 450);
-    });
-
-    afterEach(function() {
-      Timecop.return();
     });
 
     it('should leave time running', function() {
@@ -77,7 +74,7 @@ describe('Timecop', function() {
       var date1 = new Date();
       setTimeout(function() {
         var date2 = new Date();
-        expect(date2).toBeCloseInTimeTo(date1, 1);
+        expect(date2).toBeTheSameTimeAs(date1);
         self.timePassed = true;
       }, 300);
       waitsFor(function() { return self.timePassed; }, 'some time to have passed', 500);
