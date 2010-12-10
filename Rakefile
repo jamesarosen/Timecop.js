@@ -11,6 +11,11 @@ end
 
 task :default => :build
 
+desc "Delete all compiled version of the Timecop library"
+task :clean do
+  `rm timecop-*.js`
+end
+
 desc "compile, syntax-check, and test the Timecop library"
 task :build => :test
 
