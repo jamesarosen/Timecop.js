@@ -69,6 +69,16 @@ describe('Timecop', function() {
       });
     });
 
+    describe('when given a parseable String as an argument', function() {
+      var turnOfMillennium = new Timecop.NativeDate(2000, 0, 1);
+      beforeEach(function() {
+        Timecop.travel(turnOfMillennium.toString());
+      });
+      it('should travel to that Date', function() {
+        expect(new Date()).toBeCloseInTimeTo(turnOfMillennium);
+      });
+    });
+
     describe('with a function as the last argument', function() {
       var duringTrip;
 
