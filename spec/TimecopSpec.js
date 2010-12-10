@@ -79,6 +79,15 @@ describe('Timecop', function() {
       });
     });
 
+    describe('when given a non-parseable String as an argument', function() {
+      it('should throw an exception', function() {
+        var badDate = 'ioankl ajfklja';
+        expect(function() {
+          Timecop.travel(badDate);
+        }).toThrow('Could not parse date: "' + badDate + '"');
+      });
+    });
+
     describe('with a function as the last argument', function() {
       var duringTrip;
 
