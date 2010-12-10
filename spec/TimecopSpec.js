@@ -1,5 +1,13 @@
 describe('Timecop', function() {
 
+  beforeEach(function() {
+    Timecop.install();
+  });
+
+  afterEach(function() {
+    Timecop.uninstall();
+  });
+
   it('should exist', function() {
     expect(typeof(Timecop)).not.toEqual('undefined');
   });

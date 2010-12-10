@@ -1,9 +1,14 @@
 describe('Timecop.MockDate', function() {
 
   var now, date;
-
+  
   beforeEach(function() {
-    now = new Timecop.NativeDate();
+    now = new Date();
+    Timecop.install();
+  });
+
+  afterEach(function() {
+    Timecop.uninstall();
   });
 
   describe('when created in the present without arguments', function() {
