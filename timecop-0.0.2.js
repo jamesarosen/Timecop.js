@@ -57,7 +57,7 @@ var takeTrip = function(type, args) {
     try {
       fn();
     } finally {
-      Timecop.return();
+      Timecop.returnToPresent();
     }
   }
 };
@@ -122,7 +122,7 @@ var Timecop = {
   },
 
   // Pop one level off the stack.
-  return: function() {
+  returnToPresent: function() {
     timeStack.clear();
   },
 

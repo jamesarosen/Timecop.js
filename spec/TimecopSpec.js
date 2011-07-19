@@ -5,7 +5,7 @@ describe('Timecop', function() {
   });
 
   afterEach(function() {
-    Timecop.return();
+    Timecop.returnToPresent();
     Timecop.uninstall();
   });
 
@@ -16,7 +16,7 @@ describe('Timecop', function() {
   it('should have a public API', function() {
     expect(Timecop).toHaveFunction('travel');
     expect(Timecop).toHaveFunction('freeze');
-    expect(Timecop).toHaveFunction('return');
+    expect(Timecop).toHaveFunction('returnToPresent');
     expect(Timecop).toHaveFunction('topOfStack');
     expect(Timecop).toHaveFunction('buildNativeDate');
   });
@@ -147,7 +147,7 @@ describe('Timecop', function() {
       Timecop.travel(1982, 7,  8);
       Timecop.freeze(1969, 9,  10);
       Timecop.travel(2004, 11, 12);
-      Timecop.return();
+      Timecop.returnToPresent();
       var afterReturn = new Date();
       expect(afterReturn).toBeCloseInTimeTo(beforeLeave);
     });
