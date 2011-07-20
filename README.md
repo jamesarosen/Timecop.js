@@ -16,7 +16,7 @@ Travel to the afternoon of January 21, 2012, and keep time frozen then:
 
 Return to the present:
 
-    Timecop.return();
+    Timecop.returnToPresent();
 
 ## Contributing ##
 
