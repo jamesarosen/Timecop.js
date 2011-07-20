@@ -1,6 +1,6 @@
 # Build-related information:
 
-TIMECOP_VERSION = '0.0.2.1'
+TIMECOP_VERSION = '0.0.4'
 output_path = File.expand_path("../timecop-#{TIMECOP_VERSION}.js", __FILE__)
 lib_dir = File.expand_path('../lib', __FILE__)
 lib_files = [ 'Timecop', 'MockDate', 'TimeStackItem' ].map do |file|
