@@ -8,7 +8,7 @@ describe('Timecop.MockDate', function() {
   });
 
   afterEach(function() {
-    Timecop.return();
+    Timecop.returnToPresent();
     Timecop.uninstall();
   });
 
@@ -33,7 +33,7 @@ describe('Timecop.MockDate', function() {
     });
 
     it('should stay in the past even after we return to the present', function() {
-      Timecop.return();
+      Timecop.returnToPresent();
       expect(date.getFullYear()).toEqual(1980);
     });
   });
@@ -47,7 +47,7 @@ describe('Timecop.MockDate', function() {
       expect(date.getFullYear()).toEqual(1838);
       Timecop.travel(1945, 5, 6);
       expect(date.getFullYear()).toEqual(1838);
-      Timecop.return();
+      Timecop.returnToPresent();
       expect(date.getFullYear()).toEqual(1838);
     });
   });
