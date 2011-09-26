@@ -6,6 +6,9 @@ Ruby to Javascript.
 
 ## How ##
 
+Call `Timecop.install()` once to get started. This replaces `Date` with
+`Timecop.MockDate`. After that, you can travel through time at will.
+
 Travel to the morning of October 17, 2010, and allow time to continue advancing:
 
     Timecop.travel(new Date(2010, 10, 17, 11, 45));
