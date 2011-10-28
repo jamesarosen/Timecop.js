@@ -11,15 +11,27 @@ Call `Timecop.install()` once to get started. This replaces `Date` with
 
 Travel to the morning of October 17, 2010, and allow time to continue advancing:
 
-    Timecop.travel(new Date(2010, 10, 17, 11, 45));
+``` javascript
+Timecop.travel(new Date(2010, 10, 17, 11, 45));
+```
 
 Travel to the afternoon of January 21, 2012, and keep time frozen then:
 
-    Timecop.freeze(new Date(2012, 1, 21, 14, 30))
+``` javascript
+Timecop.freeze(new Date(2012, 1, 21, 14, 30));
+```
 
 Return to the present:
 
-    Timecop.returnToPresent();
+``` javascript
+Timecop.returnToPresent();
+```
+
+Finally, to uninstall Timecop and reinstate the native Date constructor:
+
+``` javascript
+Timecop.uninstall();
+```
 
 ## Contributing ##
 
