@@ -52,4 +52,21 @@ describe('Timecop.MockDate', function() {
     });
   });
 
+  it('has setters', function() {
+    [
+      'Date', 'Day', 'FullYear', 'Hours', 'Milliseconds', 'Minutes', 'Month',
+    'Seconds', 'Time', 'TimezoneOffset', 'UTCDate', 'UTCDay',
+      'UTCFullYear', 'UTCHours', 'UTCMilliseconds', 'UTCMinutes',
+      'UTCMonth', 'UTCSeconds', 'Year'
+    ].forEach(function(aspect) {
+      expect(date).toHaveFunction('set' + aspect);
+    });
+  });
+
+  it('proxies setters to the underlying date', function() {
+    date = new Timecop.MockDate();
+    date.setFullYear(1838);
+    expect(date.getFullYear()).toEqual(1838);
+  });
+
 });
