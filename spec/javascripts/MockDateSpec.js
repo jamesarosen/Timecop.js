@@ -1,7 +1,7 @@
 describe('Timecop.MockDate', function() {
 
   var now, date;
-  
+
   beforeEach(function() {
     now = new Date();
     Timecop.install();

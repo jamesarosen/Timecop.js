@@ -1,10 +1,12 @@
 # Build-related information:
 
 TIMECOP_VERSION = '0.0.5'
-output_path = File.expand_path("../timecop-#{TIMECOP_VERSION}.js", __FILE__)
-lib_dir = File.expand_path('../lib', __FILE__)
-lib_files = [ 'Timecop', 'MockDate', 'TimeStackItem' ].map do |file|
-  File.join(lib_dir, "#{file}.js")
+project_root = File.expand_path(File.dirname(__FILE__))
+output_path = File.join(project_root, "timecop-#{TIMECOP_VERSION}.js")
+lib_dir = File.join(project_root, 'lib')
+
+lib_files = [ 'Timecop', 'MockDate', 'TimeStackItem' ].map do |f|
+  File.join(lib_dir, "#{f}.js")
 end
 
 # Tasks:
@@ -20,14 +22,36 @@ desc "compile, syntax-check, and test the Timecop library"
 task :build => :test
 
 desc "Run tests on the compiled Timecop library"
-task :test => :lint do
-  puts "No command-line tests yet."
+task :test => :jshint do
+  sh "bundle exec jasmine-headless-webkit" do |ok, res|
+    fail "Test failures" unless ok
+  end
+  puts "Tests passed"
 end
 
-desc "Run JSLint syntax checks on the compiled Timecop library"
-task :lint => output_path do
-  puts "No JSLint yet."
+namespace :jshint do
+  task :require do
+    sh "which jshint" do |ok, res|
+      fail 'Cannot find jshint on $PATH' unless ok
+    end
+  end
+
+  task :check => [ 'jshint:require', output_path ] do
+    config_file = File.join(project_root, '.jshintrc')
+    sh "jshint #{lib_files.join(' ')} --config #{config_file}" do |ok, res|
+      fail 'JSHint found errors in source.' unless ok
+    end
+
+    sh "jshint #{output_path} --config #{config_file}" do |ok, res|
+      fail 'JSHint found errors in compiled output.' unless ok
+    end
+
+    puts "JSHint checks passed"
+  end
 end
+
+desc 'Run JSHint checks against Javascript source'
+task :jshint => 'jshint:check'
 
 desc "compile the files in lib/ to timecop-{version}.js"
 file output_path => lib_files do
