@@ -136,7 +136,7 @@ var Timecop = {
 root.Timecop = Timecop;
 
 // Export it as a V8 module, if applicable:
-if (typeof(exports) !== 'undefined') { exports._ = _; }
+if (typeof(exports) !== 'undefined') { exports.Timecop = root.Timecop; }
 
 
 // A mock Date implementation.
@@ -167,7 +167,7 @@ defineDelegate('valueOf');
 
 var delegatedAspects = [
     'Date', 'Day', 'FullYear', 'Hours', 'Milliseconds', 'Minutes', 'Month',
-    'Seconds', 'Time', 'TimezoneOffset', 'UTCDate', 'UTCDay', 
+    'Seconds', 'Time', 'TimezoneOffset', 'UTCDate', 'UTCDay',
     'UTCFullYear', 'UTCHours', 'UTCMilliseconds', 'UTCMinutes',
     'UTCMonth', 'UTCSeconds', 'Year'
   ],

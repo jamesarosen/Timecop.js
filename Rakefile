@@ -1,7 +1,9 @@
 # Build-related information:
+require 'json'
 
 TIMECOP_VERSION = '0.0.5'
-output_path = File.expand_path("../timecop-#{TIMECOP_VERSION}.js", __FILE__)
+PACKAGE_LOCATION = File.expand_path('../package.json', __FILE__)
+output_path = File.expand_path("../timecop.js", __FILE__)
 lib_dir = File.expand_path('../lib', __FILE__)
 lib_files = [ 'Timecop', 'MockDate', 'TimeStackItem' ].map do |file|
   File.join(lib_dir, "#{file}.js")
@@ -13,7 +15,7 @@ task :default => :build
 
 desc "Delete all compiled version of the Timecop library"
 task :clean do
-  `rm timecop-*.js`
+  `rm timecop.js`
 end
 
 desc "compile, syntax-check, and test the Timecop library"
@@ -25,8 +27,21 @@ task :test => :lint do
 end
 
 desc "Run JSLint syntax checks on the compiled Timecop library"
-task :lint => output_path do
+task :lint => :bump_version do
   puts "No JSLint yet."
+end
+
+desc "Version bump the package.json file"
+task :bump_version => output_path do
+  package = JSON.parse(File.read(PACKAGE_LOCATION))
+
+  if package["version"] == TIMECOP_VERSION
+    puts("The version was not bumped")
+  else
+    package["version"] = TIMECOP_VERSION
+    File.open(PACKAGE_LOCATION, 'w') {|f| f.write(JSON.pretty_generate(package)) }
+    puts("Updated the version of package.json to #{TIMECOP_VERSION}")
+  end
 end
 
 desc "compile the files in lib/ to timecop-{version}.js"
@@ -43,5 +58,5 @@ file output_path => lib_files do
 
   File.open(output_path, 'w') { |f| f.write(compiled) }
 
-  puts("Wrote #{output_path}");
+  puts("Wrote #{output_path}")
 end
