@@ -1,4 +1,4 @@
-//  Timecop.js version 0.0.5
+//  Timecop.js version 0.1.0
 //  (c) 2010 James A. Rosen, Zendesk Inc.
 //  Timecop.js is freely distributable under the MIT license.
 //  The concept and some of the structure is borrowed from Timecop,
@@ -14,13 +14,12 @@
 // Establish the root object, `window` in the browser, or `global` on the server.
 var root = this;
 
-// Save the previous value of the 'Timecop' variable:
-var previousUnderscore = root.Timecop;
-
 var slice = Array.prototype.slice;
 
 // the stack of Timecop.NativeDates.
 var timeStack = [];
+
+var Timecop;
 
 timeStack.peek = function() {
   if (this.length > 0) {
@@ -62,7 +61,7 @@ var takeTrip = function(type, args) {
   }
 };
 
-var Timecop = {
+Timecop = {
   // The native Date implementation.
   NativeDate: root.Date,
 
@@ -132,12 +131,19 @@ var Timecop = {
   }
 };
 
-// Export Timecop to the global namespace:
-root.Timecop = Timecop;
+// Export Timecop for **CommonJS**, with backwards-compatibility for the old
+// `require()` API. If we're not in CommonJS, add `Timecop` to the global
+// object.
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = Timecop;
+  Timecop.Timecop = Timecop;
+} else {
+  // Exported as a string, for Closure Compiler "advanced" mode.
+  root.Timecop = Timecop;
+}
 
-// Export it as a V8 module, if applicable:
-if (typeof(exports) !== 'undefined') { exports.Timecop = root.Timecop; }
 
+/*globals Timecop*/
 
 // A mock Date implementation.
 Timecop.MockDate = function() {
@@ -163,6 +169,7 @@ function defineDelegate(method) {
 }
 
 defineDelegate('toString');
+defineDelegate('toUTCString');
 defineDelegate('valueOf');
 
 var delegatedAspects = [
@@ -179,6 +186,8 @@ for (var i = 0; i < delegatedActions.length; i++) {
   }
 }
 
+
+/*globals Timecop*/
 
 // A data class for carrying around 'time movement' objects.
 // Makes it easy to keep track of the time movements on a simple stack.

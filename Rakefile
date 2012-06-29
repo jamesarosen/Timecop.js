@@ -3,7 +3,7 @@ require 'json'
 
 TIMECOP_VERSION = '0.1.0'
 project_root = File.expand_path(File.dirname(__FILE__))
-package_location = File.join(project_root, timecop.js)
+package_location = File.join(project_root, 'package.json')
 output_path = File.join(project_root, "timecop.js")
 lib_dir = File.join(project_root, 'lib')
 
@@ -21,10 +21,10 @@ task :clean do
 end
 
 desc "compile, syntax-check, and test the Timecop library"
-task :build => :test
+task :build => output_path
 
 desc "Run tests on the compiled Timecop library"
-task :test => :jshint do
+task :test => 'jshint:check'  do
   sh "bundle exec jasmine-headless-webkit" do |ok, res|
     fail "Test failures" unless ok
   end
@@ -38,7 +38,7 @@ namespace :jshint do
     end
   end
 
-  task :check => [ 'jshint:require', :bump_version ] do
+  task :check => 'jshint:require' do
     config_file = File.join(project_root, '.jshintrc')
     sh "jshint #{lib_files.join(' ')} --config #{config_file}" do |ok, res|
       fail 'JSHint found errors in source.' unless ok
@@ -53,7 +53,7 @@ namespace :jshint do
 end
 
 desc "Version bump the package.json file"
-task :bump_version => output_path do
+task :bump_version => :test do
   package = JSON.parse(File.read(package_location))
 
   if package["version"] == TIMECOP_VERSION
@@ -66,7 +66,7 @@ task :bump_version => output_path do
 end
 
 desc "compile the files in lib/ to timecop-{version}.js"
-file output_path => lib_files do
+file output_path => :bump_version do
   template = File.read(File.join(lib_dir, 'BuildTemplate.js'))
 
   contents = lib_files.
