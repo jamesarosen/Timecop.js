@@ -5,7 +5,7 @@
 #
 src_files:
   - 'spec/javascripts/support/jquery*.js'
-  - 'timecop-*.js'
+  - 'timecop.js'
 
 # stylesheets
 #
