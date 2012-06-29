@@ -142,6 +142,8 @@ if (typeof module !== 'undefined' && module.exports) {
   root.Timecop = Timecop;
 }
 
+// Export it as a V8 module, if applicable:
+if (typeof(exports) !== 'undefined') { exports.Timecop = root.Timecop; }
 
 /*globals Timecop*/
 
