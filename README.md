@@ -1,7 +1,7 @@
 ## What ##
 
 A port of John Trupiano's awesome
-[Timecop](https://github.com/jtrupiano/timecop)
+[Timecop](https://github.com/travisjeffery/timecop)
 Ruby to Javascript.
 
 ## How ##
