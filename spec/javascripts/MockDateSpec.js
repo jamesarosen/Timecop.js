@@ -69,4 +69,15 @@ describe('Timecop.MockDate', function() {
     expect(date.getFullYear()).toEqual(1838);
   });
 
+  it('proxies to* to the underlying date', function() {
+    date = new Timecop.MockDate();
+    [
+      'toDateString', 'toGMTString', 'toISOString', 'toJSON',
+      'toLocaleDateString', 'toLocaleString', 'toLocaleTimeString', 'toString',
+      'toTimeString', 'toUTCString'
+    ].forEach(function(method) {
+      expect(date).toHaveFunction(method);
+    });
+  });
+
 });
