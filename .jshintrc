@@ -1,7 +1,6 @@
 {
   "predef":    [ "module" ],
 
-  "adsafe":   false,
   "bitwise":  true,
   "newcap":   false,
   "eqeqeq":   false,
@@ -11,20 +10,15 @@
   "onevar":   false,
   "plusplus": false,
   "regexp":   false,
-  "safe":     false,
   "strict":   false,
   "undef":    true,
   "white":    false,
 
-  "cap":      false,
-  "css":      true,
   "debug":    false,
   "es5":      false,
   "evil":     false,
   "forin":    false,
-  "fragment": true,
   "laxbreak": false,
-  "on":       false,
   "sub":      false,
 
   "maxlen":    200,
@@ -33,10 +27,7 @@
   "passfail":  false,
   "browser":   true,
   "rhino":     false,
-  "windows":   false,
-  "widget":    false,
   "devel":     true,
   "lastsemic": false,
-  "newstat":   false,
   "expr":      true
 }

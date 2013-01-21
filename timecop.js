@@ -169,6 +169,7 @@ function defineDelegate(method) {
 }
 
 defineDelegate('toString');
+defineDelegate('toUTCString');
 defineDelegate('valueOf');
 
 var delegatedAspects = [
