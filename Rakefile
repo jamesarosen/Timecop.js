@@ -1,6 +1,6 @@
 # Build-related information:
 
-TIMECOP_VERSION = '0.1.0'
+TIMECOP_VERSION = '0.1.1'
 project_root = File.expand_path(File.dirname(__FILE__))
 output_path = File.join(project_root, "timecop-#{TIMECOP_VERSION}.js")
 lib_dir = File.join(project_root, 'lib')

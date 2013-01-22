@@ -1,4 +1,4 @@
-//  Timecop.js version 0.1.0
+//  Timecop.js version 0.1.1
 //  (c) 2010 James A. Rosen, Zendesk Inc.
 //  Timecop.js is freely distributable under the MIT license.
 //  The concept and some of the structure is borrowed from Timecop,
@@ -154,6 +154,10 @@ Timecop.MockDate = function() {
   }
 };
 
+Timecop.MockDate.UTC = function() {
+  return Timecop.NativeDate.UTC.apply(Timecop.NativeDate, arguments);
+};
+
 Timecop.MockDate.parse = function(dateString) {
   return Timecop.NativeDate.parse(dateString);
 };
@@ -168,7 +172,16 @@ function defineDelegate(method) {
   };
 }
 
+defineDelegate('toDateString');
+defineDelegate('toGMTString');
+defineDelegate('toISOString');
+defineDelegate('toJSON');
+defineDelegate('toLocaleDateString');
+defineDelegate('toLocaleString');
+defineDelegate('toLocaleTimeString');
 defineDelegate('toString');
+defineDelegate('toTimeString');
+defineDelegate('toUTCString');
 defineDelegate('valueOf');
 
 var delegatedAspects = [
