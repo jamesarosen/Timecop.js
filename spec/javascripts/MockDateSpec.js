@@ -12,6 +12,12 @@ describe('Timecop.MockDate', function() {
     Timecop.uninstall();
   });
 
+  it('delegates the class method UTC to Timecop.NativeDate', function() {
+    var nativeUTC = Timecop.NativeDate.UTC(2012, 12, 20, 14, 44),
+        mockUTC   = Timecop.MockDate.UTC(2012, 12, 20, 14, 44);
+    expect(mockUTC).toEqual(nativeUTC);
+  });
+
   describe('when created in the present without arguments', function() {
     beforeEach(function() {
       date = new Timecop.MockDate();
