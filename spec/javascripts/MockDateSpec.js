@@ -44,6 +44,22 @@ describe('Timecop.MockDate', function() {
     });
   });
 
+  describe("when created, and subsequently modified, while time is frozen", function() {
+    var otherDate;
+
+    beforeEach( function(){
+      Timecop.freeze(1980, 4, 29);
+      date = new Timecop.MockDate();
+      otherDate = new Timecop.MockDate();
+      date.setFullYear(1900);
+    });
+
+    it("should not modify other `Timecop.MockDate` instances created during the same trip", function() {
+      expect(date.getFullYear()).toEqual(1900);
+      expect(otherDate.getFullYear()).toEqual(1980);
+    });
+  });
+
   describe('when created with year, month, date', function() {
     beforeEach(function() {
       date = new Timecop.MockDate(1838, 8, 18, 16, 45);
