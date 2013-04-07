@@ -5,6 +5,7 @@ project_root = Pathname.new File.expand_path(File.dirname(__FILE__))
 
 $LOAD_PATH << project_root.join('lib').to_s
 require 'timecop/compilation_task'
+require 'timecop/jshint_task'
 
 # Build-related information:
 
@@ -46,16 +47,16 @@ namespace :jshint do
     sh 'npm', 'install'
   end
 
-  task :check_source => [ *lib_files, jshint_config, jshint_executable ] do
-    sh 'jshint', *lib_files, '--config', jshint_config do |ok, res|
-      fail 'JSHint found errors in source.' unless ok
-    end
+  Timecop::JSHintTask.new :check_source do |t|
+    t.files       = lib_files
+    t.executable  = jshint_executable
+    t.config      = jshint_config
   end
 
-  task :check_tmp_dist => [ tmp_dist, jshint_config, jshint_executable ] do
-    sh 'jshint', tmp_dist, '--config', jshint_config do |ok, res|
-      fail 'JSHint found errors in compiled output.' unless ok
-    end
+  Timecop::JSHintTask.new :check_tmp_dist do |t|
+    t.files       = [ tmp_dist ]
+    t.executable  = jshint_executable
+    t.config      = jshint_config
   end
 
   task :check => [ 'jshint:check_source', 'jshint:check_tmp_dist' ] do
