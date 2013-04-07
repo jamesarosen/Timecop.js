@@ -1,12 +1,21 @@
 {
-  "name"          : "timecop",
-  "description"   : "Time travel and freezing for Javascript tests",
-  "url"           : "http://github.com/jamesarosen/Timecop.js",
-  "keywords"      : ["util", "testing", "server", "client", "browser"],
-  "author"        : "James A. Rosen <james@zendesk.com>",
-  "contributors"  : [],
-  "dependencies"  : [],
-  "lib"           : ".",
-  "main"          : "timecop.js",
-  "version"       : "0.1.1"
+  "name": "timecop",
+  "description": "Time travel and freezing for Javascript tests",
+  "url": "http://github.com/jamesarosen/Timecop.js",
+  "keywords": [
+    "util",
+    "testing",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "James A. Rosen <james.a.rosen@gmail.com>",
+  "contributors": [],
+  "dependencies": [],
+  "lib": ".",
+  "main": "timecop.js",
+  "version": "0.1.1",
+  "devDependencies": {
+    "jshint": "~1.1.0"
+  }
 }
