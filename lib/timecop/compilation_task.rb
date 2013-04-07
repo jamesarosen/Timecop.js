@@ -16,9 +16,11 @@ module Timecop
     end
 
     def define
-      out_dir = File.dirname(@name)
+      CLEAN << name
 
-      file @name => [ *source_files, template, out_dir ] do
+      out_dir = File.dirname(name)
+
+      file name => [ *source_files, template, out_dir ] do
         template = File.read(self.template)
 
         contents = source_files.

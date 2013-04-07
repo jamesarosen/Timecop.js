@@ -27,7 +27,6 @@ dist_file = project_root.join("timecop.js").to_s
 task :default => :test
 
 require 'rake/clean'
-CLEAN << tmp_dir
 
 directory tmp_dir.to_s
 
