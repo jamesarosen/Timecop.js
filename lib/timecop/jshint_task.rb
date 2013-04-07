@@ -34,3 +34,9 @@ module Timecop
   end
 
 end
+
+Rake::DSL.class_eval do
+  def jshint(name, &block)
+    Timecop::JSHintTask.new(name, &block)
+  end
+end
