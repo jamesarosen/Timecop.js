@@ -15,3 +15,6 @@ Code style:
  * all conditional and loop blocks have `{ }`
  * not picky about spaces around arguments
  * all code must pass JSLint with fairly strict settings
+
+Please do not make changes to the compiled version of the library in the same
+commit as other changes. Releases should be separate, tagged commits.
