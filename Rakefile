@@ -1,19 +1,20 @@
 # Build-related information:
 
 require 'json'
+require 'pathname'
 
-project_root = File.expand_path(File.dirname(__FILE__))
-timecop_version = JSON.parse(File.read(File.join(project_root, 'package.json')))['version']
+project_root = Pathname.new File.expand_path(File.dirname(__FILE__))
+timecop_version = JSON.parse(File.read(project_root.join('package.json')))['version']
 
-lib_dir = File.join(project_root, 'lib')
+lib_dir = project_root.join('lib')
 lib_files = [ 'Timecop', 'MockDate', 'TimeStackItem' ].map do |f|
-  File.join(lib_dir, "#{f}.js")
+  lib_dir.join("#{f}.js").to_s
 end
 
-tmp_dir   = File.join(project_root, 'tmp')
-tmp_dist  = File.join(tmp_dir, 'timecop.js')
+tmp_dir   = project_root.join('tmp')
+tmp_dist  = tmp_dir.join('timecop.js').to_s
 
-dist_file = File.join(project_root, "timecop.js")
+dist_file = project_root.join("timecop.js").to_s
 
 # Tasks:
 
@@ -22,7 +23,7 @@ task :default => :test
 require 'rake/clean'
 CLEAN << tmp_dir
 
-directory tmp_dir
+directory tmp_dir.to_s
 
 desc "Run tests on the compiled Timecop library"
 task :test => :jshint do
@@ -33,13 +34,13 @@ task :test => :jshint do
 end
 
 namespace :jshint do
-  jshint_executable = File.join(project_root, 'node_modules', 'jshint', 'bin', 'jshint')
+  jshint_executable = project_root.join('node_modules', 'jshint', 'bin', 'jshint')
 
   file jshint_executable do
     sh 'npm', 'install'
   end
 
-  jshint_config = File.join(project_root, '.jshintrc')
+  jshint_config = project_root.join('.jshintrc').to_s
 
   task :check_source => [ *lib_files, jshint_config, jshint_executable ] do
     sh 'jshint', *lib_files, '--config', jshint_config do |ok, res|
@@ -61,7 +62,7 @@ end
 desc 'Run JSHint checks against JavaScript'
 task :jshint => 'jshint:check'
 
-template_file = File.join(lib_dir, 'BuildTemplate.js')
+template_file = lib_dir.join('BuildTemplate.js')
 
 file tmp_dist => [ *lib_files, tmp_dir, template_file ] do
   template = File.read(template_file)
@@ -79,7 +80,7 @@ file tmp_dist => [ *lib_files, tmp_dir, template_file ] do
   puts("Wrote #{tmp_dist}");
 end
 
-file dist_file => tmp_dist do |t|
+file dist_file => [ tmp_dist, 'test' ] do |t|
   cp t.prerequisites.first, t.name
 end
 
