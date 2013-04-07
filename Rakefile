@@ -1,25 +1,28 @@
 # Build-related information:
 
-TIMECOP_VERSION = '0.1.1'
-project_root = File.expand_path(File.dirname(__FILE__))
-output_path = File.join(project_root, "timecop-#{TIMECOP_VERSION}.js")
-lib_dir = File.join(project_root, 'lib')
+require 'json'
 
+project_root = File.expand_path(File.dirname(__FILE__))
+timecop_version = JSON.parse(File.read(File.join(project_root, 'package.json')))['version']
+
+lib_dir = File.join(project_root, 'lib')
 lib_files = [ 'Timecop', 'MockDate', 'TimeStackItem' ].map do |f|
   File.join(lib_dir, "#{f}.js")
 end
 
+tmp_dir   = File.join(project_root, 'tmp')
+tmp_dist  = File.join(tmp_dir, 'timecop.js')
+
+dist_file = File.join(project_root, "timecop.js")
+
 # Tasks:
 
-task :default => :build
+task :default => :test
 
-desc "Delete all compiled version of the Timecop library"
-task :clean do
-  `rm timecop-*.js`
-end
+require 'rake/clean'
+CLEAN << tmp_dir
 
-desc "compile, syntax-check, and test the Timecop library"
-task :build => :test
+directory tmp_dir
 
 desc "Run tests on the compiled Timecop library"
 task :test => :jshint do
@@ -30,42 +33,55 @@ task :test => :jshint do
 end
 
 namespace :jshint do
-  task :require do
-    sh "which jshint" do |ok, res|
-      fail 'Cannot find jshint on $PATH' unless ok
+  jshint_executable = File.join(project_root, 'node_modules', 'jshint', 'bin', 'jshint')
+
+  file jshint_executable do
+    sh 'npm', 'install'
+  end
+
+  jshint_config = File.join(project_root, '.jshintrc')
+
+  task :check_source => [ *lib_files, jshint_config, jshint_executable ] do
+    sh 'jshint', *lib_files, '--config', jshint_config do |ok, res|
+      fail 'JSHint found errors in source.' unless ok
     end
   end
 
-  task :check => [ 'jshint:require', output_path ] do
-    config_file = File.join(project_root, '.jshintrc')
-    sh "jshint #{lib_files.join(' ')} --config #{config_file}" do |ok, res|
-      fail 'JSHint found errors in source.' unless ok
-    end
-
-    sh "jshint #{output_path} --config #{config_file}" do |ok, res|
+  task :check_tmp_dist => [ tmp_dist, jshint_config, jshint_executable ] do
+    sh 'jshint', tmp_dist, '--config', jshint_config do |ok, res|
       fail 'JSHint found errors in compiled output.' unless ok
     end
+  end
 
+  task :check => [ 'jshint:check_source', 'jshint:check_tmp_dist' ] do
     puts "JSHint checks passed"
   end
 end
 
-desc 'Run JSHint checks against Javascript source'
+desc 'Run JSHint checks against JavaScript'
 task :jshint => 'jshint:check'
 
-desc "compile the files in lib/ to timecop-{version}.js"
-file output_path => lib_files do
-  template = File.read(File.join(lib_dir, 'BuildTemplate.js'))
+template_file = File.join(lib_dir, 'BuildTemplate.js')
+
+file tmp_dist => [ *lib_files, tmp_dir, template_file ] do
+  template = File.read(template_file)
 
   contents = lib_files.
               map { |f| File.read(f) }.
               join("\n\n")
 
   compiled = template.
-              sub('{{ TIMECOP_VERSION }}', TIMECOP_VERSION).
+              sub('{{ TIMECOP_VERSION }}', timecop_version).
               sub('{{ TIMECOP_LIBRARIES }}', contents)
 
-  File.open(output_path, 'w') { |f| f.write(compiled) }
+  File.open(tmp_dist, 'w') { |f| f.write(compiled) }
 
-  puts("Wrote #{output_path}");
+  puts("Wrote #{tmp_dist}");
 end
+
+file dist_file => tmp_dist do |t|
+  cp t.prerequisites.first, t.name
+end
+
+desc "Compile #{dist_file} for release"
+task :dist => dist_file
