@@ -42,3 +42,9 @@ module Timecop
   end
 
 end
+
+Rake::DSL.class_eval do
+  def compile(name, &block)
+    Timecop::CompilationTask.new(name, &block)
+  end
+end

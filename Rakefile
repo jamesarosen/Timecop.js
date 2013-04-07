@@ -68,7 +68,7 @@ end
 desc 'Run JSHint checks against JavaScript'
 task :jshint => 'jshint:check'
 
-Timecop::CompilationTask.new tmp_dist do |t|
+compile tmp_dist do |t|
   t.source_files = lib_files
   t.template     = template_file
   t.version      = timecop_version
