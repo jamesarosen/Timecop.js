@@ -17,11 +17,6 @@ module Timecop
     end
 
     def define
-      files       = self.files.map(&:to_s)
-      executable  = self.executable.to_s
-      config      = self.config.to_s
-      marker_file = self.marker_file.to_s
-
       CLEAN << marker_file
 
       task name => marker_file

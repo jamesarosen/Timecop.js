@@ -40,7 +40,7 @@ task :test => :jshint do
 end
 
 namespace :jshint do
-  jshint_executable = project_root.join('node_modules', 'jshint', 'bin', 'jshint')
+  jshint_executable = project_root.join('node_modules', 'jshint', 'bin', 'jshint').to_s
   jshint_config     = project_root.join('.jshintrc').to_s
 
   file jshint_executable do
