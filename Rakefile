@@ -1,15 +1,20 @@
-# Build-related information:
-
 require 'json'
 require 'pathname'
 
 project_root = Pathname.new File.expand_path(File.dirname(__FILE__))
+
+$LOAD_PATH << project_root.join('lib').to_s
+require 'timecop/compilation_task'
+
+# Build-related information:
+
 timecop_version = JSON.parse(File.read(project_root.join('package.json')))['version']
 
 lib_dir = project_root.join('lib')
 lib_files = [ 'Timecop', 'MockDate', 'TimeStackItem' ].map do |f|
   lib_dir.join("#{f}.js").to_s
 end
+template_file = lib_dir.join('BuildTemplate.js')
 
 tmp_dir   = project_root.join('tmp')
 tmp_dist  = tmp_dir.join('timecop.js').to_s
@@ -35,12 +40,11 @@ end
 
 namespace :jshint do
   jshint_executable = project_root.join('node_modules', 'jshint', 'bin', 'jshint')
+  jshint_config     = project_root.join('.jshintrc').to_s
 
   file jshint_executable do
     sh 'npm', 'install'
   end
-
-  jshint_config = project_root.join('.jshintrc').to_s
 
   task :check_source => [ *lib_files, jshint_config, jshint_executable ] do
     sh 'jshint', *lib_files, '--config', jshint_config do |ok, res|
@@ -62,22 +66,10 @@ end
 desc 'Run JSHint checks against JavaScript'
 task :jshint => 'jshint:check'
 
-template_file = lib_dir.join('BuildTemplate.js')
-
-file tmp_dist => [ *lib_files, tmp_dir, template_file ] do
-  template = File.read(template_file)
-
-  contents = lib_files.
-              map { |f| File.read(f) }.
-              join("\n\n")
-
-  compiled = template.
-              sub('{{ TIMECOP_VERSION }}', timecop_version).
-              sub('{{ TIMECOP_LIBRARIES }}', contents)
-
-  File.open(tmp_dist, 'w') { |f| f.write(compiled) }
-
-  puts("Wrote #{tmp_dist}")
+Timecop::CompilationTask.new tmp_dist do |t|
+  t.source_files = lib_files
+  t.template     = template_file
+  t.version      = timecop_version
 end
 
 file dist_file => [ tmp_dist, 'test' ] do |t|
