@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     childprocess (0.2.2)
       ffi (~> 1.0.6)
