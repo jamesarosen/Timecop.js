@@ -51,12 +51,14 @@ namespace :jshint do
     t.files       = lib_files
     t.executable  = jshint_executable
     t.config      = jshint_config
+    t.marker_file = tmp_dir.join('lib.hinted')
   end
 
   Timecop::JSHintTask.new :check_tmp_dist do |t|
     t.files       = [ tmp_dist ]
     t.executable  = jshint_executable
     t.config      = jshint_config
+    t.marker_file = "#{tmp_dist}.hinted"
   end
 
   task :check => [ 'jshint:check_source', 'jshint:check_tmp_dist' ] do
