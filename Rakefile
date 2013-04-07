@@ -77,7 +77,7 @@ file tmp_dist => [ *lib_files, tmp_dir, template_file ] do
 
   File.open(tmp_dist, 'w') { |f| f.write(compiled) }
 
-  puts("Wrote #{tmp_dist}");
+  puts("Wrote #{tmp_dist}")
 end
 
 file dist_file => [ tmp_dist, 'test' ] do |t|
