@@ -18,16 +18,6 @@ describe('Timecop.MockDate', function() {
     expect(mockUTC).toEqual(nativeUTC);
   });
 
-  describe('when created using the now() class method', function() {
-    beforeEach(function() {
-      date = Timecop.MockDate.now();
-    });
-
-    it('should be about the same as now', function() {
-      expect(date).toBeCloseTo(now.getTime());
-    });
-  });
-
   describe('when created in the present without arguments', function() {
     beforeEach(function() {
       date = new Timecop.MockDate();
