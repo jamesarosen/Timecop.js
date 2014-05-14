@@ -1,4 +1,4 @@
-//  Timecop.js version 0.1.1
+//  Timecop.js version 0.2.0
 //  (c) 2010 James A. Rosen, Zendesk Inc.
 //  Timecop.js is freely distributable under the MIT license.
 //  The concept and some of the structure is borrowed from Timecop,
@@ -162,6 +162,12 @@ Timecop.MockDate.UTC = function() {
 Timecop.MockDate.parse = function(dateString) {
   return Timecop.NativeDate.parse(dateString);
 };
+
+if (Timecop.NativeDate.hasOwnProperty('now')) {
+  Timecop.MockDate.now = function() {
+    return new Timecop.MockDate().getTime();
+  };
+}
 
 Timecop.MockDate.prototype = {};
 

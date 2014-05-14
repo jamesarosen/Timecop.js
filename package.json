@@ -2,6 +2,7 @@
   "name": "timecop",
   "description": "Time travel and freezing for Javascript tests",
   "url": "http://github.com/jamesarosen/Timecop.js",
+  "repository": "https://github.com/jamesarosen/Timecop.js.git",
   "keywords": [
     "util",
     "testing",
@@ -11,10 +12,10 @@
   ],
   "author": "James A. Rosen <james.a.rosen@gmail.com>",
   "contributors": [],
-  "dependencies": [],
+  "dependencies": {},
   "lib": ".",
   "main": "timecop.js",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "devDependencies": {
     "jshint": "~1.1.0"
   }
