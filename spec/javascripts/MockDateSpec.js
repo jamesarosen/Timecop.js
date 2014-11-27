@@ -36,6 +36,12 @@ describe('Timecop.MockDate', function() {
     it('should be about the same as now', function() {
       expect(date).toBeCloseInTimeTo(now);
     });
+
+
+    it('should still have a correct clone', function () {
+      var Ctor = date.constructor;
+      expect(date).toEqual(new Ctor(+date));
+    });
   });
 
   describe('when created while time traveling to the past without arguments', function() {
